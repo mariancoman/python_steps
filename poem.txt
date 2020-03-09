@@ -2,3 +2,5 @@ ROGAVIV
 Rosu
 Orange
 Galben
+Albastru
+Verde
