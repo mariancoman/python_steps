@@ -38,7 +38,7 @@ def numar(m):
     if m in ('J','Q','K'):
         t = t + 10
     elif m == 'A':
-        t=t+10
+        t=t+11
     else:
         t=t+m
     return t
@@ -64,8 +64,8 @@ def suma(M):
         t = t+numar(i)
 
     n = numar_asi(M)            # valorifica asii:
-    while (n>0) and (t > 21):
-        t = t-9
+    while (n > 0) and (t > 21):
+        t = t-10
         n = n-1
 
     return t
@@ -102,39 +102,45 @@ def afisare_runda_jucator():
     print('DEALER: ['+str(D[0])+'][X]')
     r = int(input('WHAT NOW? HIT: 1 STAY: 0'))
     if r == 1:
-        time.sleep(2)
+        time.sleep(1)
         a = random.randint(0, len(P)-1)
         J.append(P[a])
         P.pop(a)
     elif r == 0:
         print('PLAYER STOPS AT:', suma(J))
-        time.sleep(1.5)
+        time.sleep(2)
         print('DEALER CARDS:', afisare_carti(D), '__SUM:', suma(D))
-        time.sleep(1.5)
+        time.sleep(2)
         r = 0
 
 def afisare_runda_dealer():
 
     # runda de joc in care dealerul incearca sa bata scorul jucatorului
 
-    while suma(D)<21 and suma(D)<suma(J):
+    while suma(D)<19 and suma(D)<suma(J):   # dealerul trage sub 17 si se opreste la 18+
+        print('Dealer Draws..')
         time.sleep(2)
         a = random.randint(0, len(P) - 1)
         D.append(P[a])
         P.pop(a)
         afisare_situatie()
 
+
 def concluzii():
 
     # interpretarea rezultatelor
 
     if suma(D)>21:
+        time.sleep(2)
         print('DEALER BUSTS')
     elif suma(D) == suma(J):
+        time.sleep(2)
         print('TIE')
     elif suma(D) > suma(J):
+        time.sleep(2)
         print('DEALER WINS')
     else:
+        time.sleep(2)
         print('PLAYER WINS')
 
 
