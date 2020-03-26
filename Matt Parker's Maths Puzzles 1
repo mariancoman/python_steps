@@ -1,0 +1,97 @@
+"""
+
+https://www.youtube.com/watch?v=T29dydI97zY
+
+AI O SITUATIE IN CARE AI 7 OAMENI SI 7 FARFURII.. FIECARE O VREA PE UNA, DAR SE ASAZA GRESIT
+LA MASA(DOAR 1 LA CARE TREBUIE, EX 1 2 3 4 5 6 7
+                                   1 3 4 6 7 2 5
+
+                                   EXISTA SITUATII IN CARE SA NU SE POATA ASEZA MAI MULT DE 2 BINE?
+"""
+
+
+def matricial(n):
+
+    # transforma un unmar intr-o lista cu numerele sale
+    M = []
+    while n > 0:
+        u = n % 10
+        M.append(u)
+        n = n // 10
+
+    M.reverse()
+
+    return M
+
+
+def rotate(M):
+
+    # roteste cu o unitate elementele dintr-o lista
+    pah = M[0]
+    for i in range(0,len(M)-1):
+         mem = M[i+1]
+         M[i+1]= pah
+         pah = mem
+    M[0] = pah
+    pass
+
+
+def two_or_more(M,N):
+
+    # vede daca doua liste au cel putin 2 elemente comune pe aceeasi pozitie
+
+    t = 0
+    i = 0
+    while t < 2 and i < len(M):
+        if M[i] == N[i]:
+            t = t+1
+        i = i+1
+    return t == 2
+
+
+def comparare(n,ORG):
+    # compara un numar cu o lista originala pentru a vedea daca exista cazuri in care nu exista 2 sau mai multe solutii
+    # inidferent de modul in care e rotit
+    t = False
+    M = matricial(n)
+    i = 0
+
+    while i < 7:
+        if two_or_more(M, ORG):
+            t = True
+            i = i + 1
+        else:
+            i=i+1
+            rotate(M)
+
+    if not t:
+        print(n)
+
+
+def are_089(n):
+    # verifica daca un nr are 0,8,9 in componenta
+    m=n
+    while  m>0:
+        u = m % 10
+        if u == 0 or u == 8 or u == 9:
+            return True
+        m = m//10
+    return False
+
+
+def are_toate_7(n):
+
+    # verifica daca un numar are toate 7 cifrele 1-7
+
+    M = matricial(n)
+    M.sort()
+
+    return M == [1,2,3,4,5,6,7]
+
+
+for i in range(1234567,7654322):
+    if not are_089(i): # mai intai eliminam toate numerele care au 0,8,9
+        if are_toate_7(i):  # pastram doar numele care sunt combinatii de 1-7
+            comparare(i,[1,2,3,4,5,6,7]) # odata ce un numar satisface conditia, e imprimat
+
+
